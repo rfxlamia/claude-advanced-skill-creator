@@ -1,5 +1,9 @@
 # Advanced Skill Creator
 
+[![Version](https://img.shields.io/badge/version-1.2.0-green.svg)](https://github.com/rfxlamia/claude-advanced-skill-creator)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
+
 > Professional skill creation with research-driven workflow and automated validation.
 
 **Version:** 1.2.0
