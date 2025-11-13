@@ -91,7 +91,7 @@ The readme-expert skill demonstrates:
 1. **Clone or download this repository:**
    ```bash
    git clone https://github.com/rfxlamia/claude-advanced-skill-creator
-   cd advanced-skill-creator
+   cd claude-advanced-skill-creator
    ```
 
 2. **Verify installation:**
