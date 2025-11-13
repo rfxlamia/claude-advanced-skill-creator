@@ -8,7 +8,7 @@
 
 ## Overview
 
-This guide documents how to package and distribute Claude Code skills as installable plugins through the marketplace system. Based on real-world implementation and testing of the Advanced Skill Creator plugin.
+This guide documents how to package and distribute Claude Code skills as installable plugins through the marketplace system. Based on real-world implementation and testing of the Claude Skill Kit plugin.
 
 **Why Plugin Distribution?**
 
@@ -489,11 +489,11 @@ Step 10: [OPTIONAL] Plugin distribution setup
 
 ## Real-World Example
 
-**Repository:** github.com/rfxlamia/claude-advanced-skill-creator
+**Repository:** github.com/rfxlamia/claude-skillkit
 
 **What worked:**
 ✅ `"source": "./"` for repository root reference
-✅ `skills/advanced-skill-creator/` standard structure
+✅ `skills/claude-skillkit/` standard structure
 ✅ Apache-2.0 license (matches ecosystem)
 ✅ Comprehensive README with 3 install options
 ✅ .claude/ in .gitignore (avoid committing local settings)
@@ -579,7 +579,7 @@ Step 10: [OPTIONAL] Plugin distribution setup
 
 **v1.3.0-draft (2025-11-14)**
 - Initial plugin distribution guide
-- Based on successful advanced-skill-creator plugin implementation
+- Based on successful claude-skillkit plugin implementation
 - Documented real-world testing results (963-line execution log)
 - Included troubleshooting from actual issues encountered
 - Proposed integration with v1.3 workflow

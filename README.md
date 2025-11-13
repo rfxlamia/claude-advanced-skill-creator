@@ -1,6 +1,6 @@
-# Advanced Skill Creator
+# Claude Skill Kit
 
-[![Version](https://img.shields.io/badge/version-1.2.0-green.svg)](https://github.com/rfxlamia/claude-advanced-skill-creator)
+[![Version](https://img.shields.io/badge/version-1.2.0-green.svg)](https://github.com/rfxlamia/claude-skillkit)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
 
@@ -94,19 +94,19 @@ The readme-expert skill demonstrates:
 
 1. **Clone or download this repository:**
    ```bash
-   git clone https://github.com/rfxlamia/claude-advanced-skill-creator
-   cd claude-advanced-skill-creator
+   git clone https://github.com/rfxlamia/claude-skillkit
+   cd claude-skillkit
    ```
 
 2. **Verify installation:**
    ```bash
-   ls skills/advanced-skill-creator/
+   ls skills/claude-skillkit/
    # Expected: SKILL.md, scripts/, knowledge/, references/
    ```
 
 3. **Test a script:**
    ```bash
-   python skills/advanced-skill-creator/scripts/quick_validate.py
+   python skills/claude-skillkit/scripts/quick_validate.py
    ```
 
 ### Create Your First Skill
@@ -117,16 +117,16 @@ The easiest way to use this framework is through Claude Code's plugin system:
 
 ```bash
 # In Claude Code, add the marketplace
-/plugin marketplace add rfxlamia/claude-advanced-skill-creator
+/plugin marketplace add rfxlamia/claude-skillkit
 
 # Then install the plugin
-/plugin install advanced-skill-creator@rfxlamia
+/plugin install claude-skillkit@rfxlamia
 ```
 
 Or use the interactive plugin menu:
 ```bash
 /plugin
-# Select "Browse Plugins" → Find "advanced-skill-creator" → Install
+# Select "Browse Plugins" → Find "claude-skillkit" → Install
 ```
 
 Once installed, the skill is automatically available. Invoke it with:
@@ -140,10 +140,10 @@ If you prefer manual installation:
 
 ```bash
 # Extract and install the skill (.skill files are zip archives)
-unzip advanced-skill-creator-v1.2.skill -d ~/.claude/skills/advanced-skill-creator
+unzip claude-skillkit-v1.2.skill -d ~/.claude/skills/claude-skillkit
 
 # Or for project-specific installation:
-unzip advanced-skill-creator-v1.2.skill -d .claude/skills/advanced-skill-creator
+unzip claude-skillkit-v1.2.skill -d .claude/skills/claude-skillkit
 ```
 
 Claude Code will auto-discover the skill. Then invoke it:
@@ -157,13 +157,13 @@ For direct script usage without skill installation:
 
 ```bash
 # Initialize new skill
-python skills/advanced-skill-creator/scripts/init_skill.py my-skill --path ./skills
+python skills/claude-skillkit/scripts/init_skill.py my-skill --path ./skills
 
 # Validate structure
-python skills/advanced-skill-creator/scripts/validate_skill.py my-skill/
+python skills/claude-skillkit/scripts/validate_skill.py my-skill/
 
 # Package for deployment
-python skills/advanced-skill-creator/scripts/package_skill.py my-skill/
+python skills/claude-skillkit/scripts/package_skill.py my-skill/
 ```
 
 ---
@@ -198,7 +198,7 @@ The skill supports 5 main workflows based on your intent:
 9. **Quality Assessment** - Score against quality rubric
 10. **Package** - Create deployable .skill file
 
-See `skills/advanced-skill-creator/SKILL.md` for detailed workflow documentation.
+See `skills/claude-skillkit/SKILL.md` for detailed workflow documentation.
 
 ### Validation Workflow
 
@@ -206,12 +206,12 @@ For existing skills, run validation subset (Steps 3-8):
 
 ```bash
 # Quick validation
-python skills/advanced-skill-creator/scripts/quick_validate.py skill-name/
+python skills/claude-skillkit/scripts/quick_validate.py skill-name/
 
 # Comprehensive validation
-python skills/advanced-skill-creator/scripts/validate_skill.py skill-name/ --format json
-python skills/advanced-skill-creator/scripts/security_scanner.py skill-name/ --format json
-python skills/advanced-skill-creator/scripts/quality_scorer.py skill-name/ --format json
+python skills/claude-skillkit/scripts/validate_skill.py skill-name/ --format json
+python skills/claude-skillkit/scripts/security_scanner.py skill-name/ --format json
+python skills/claude-skillkit/scripts/quality_scorer.py skill-name/ --format json
 ```
 
 ---
@@ -226,26 +226,26 @@ All 9 tools support standardized `--format json` output for automation.
 ```bash
 python scripts/init_skill.py <skill-name> --path <directory>
 ```
-Source: `skills/advanced-skill-creator/scripts/init_skill.py:1`
+Source: `skills/claude-skillkit/scripts/init_skill.py:1`
 
 **2. validate_skill.py** - Structure and reference validation
 ```bash
 python scripts/validate_skill.py skill-name/ [--format json]
 ```
 Features: Cross-reference validation, broken link detection, orphaned file detection
-Source: `skills/advanced-skill-creator/scripts/validate_skill.py:1`
+Source: `skills/claude-skillkit/scripts/validate_skill.py:1`
 
 **3. security_scanner.py** - Security audit
 ```bash
 python scripts/security_scanner.py skill-name/ [--format json]
 ```
-Source: `skills/advanced-skill-creator/scripts/security_scanner.py:1`
+Source: `skills/claude-skillkit/scripts/security_scanner.py:1`
 
 **4. token_estimator.py** - Token analysis and optimization
 ```bash
 python scripts/token_estimator.py skill-name/ [--format json]
 ```
-Source: `skills/advanced-skill-creator/scripts/token_estimator.py:1`
+Source: `skills/claude-skillkit/scripts/token_estimator.py:1`
 
 **5. test_generator.py** - Automated test generation
 ```bash
@@ -255,20 +255,20 @@ Parameters:
 - `--test-format`: pytest, unittest, or plain (default: pytest)
 - `--format`: text or json (default: text)
 
-Source: `skills/advanced-skill-creator/scripts/test_generator.py:1`
+Source: `skills/claude-skillkit/scripts/test_generator.py:1`
 
 **6. quality_scorer.py** - Quality assessment (0-10 scale)
 ```bash
 python scripts/quality_scorer.py skill-name/ [--format json]
 ```
-Source: `skills/advanced-skill-creator/scripts/quality_scorer.py:1`
+Source: `skills/claude-skillkit/scripts/quality_scorer.py:1`
 
 **7. package_skill.py** - Package skill for deployment
 ```bash
 python scripts/package_skill.py skill-name/ [--strict]
 ```
 Features: Pre-packaging validation, orphaned file warnings
-Source: `skills/advanced-skill-creator/scripts/package_skill.py:1`
+Source: `skills/claude-skillkit/scripts/package_skill.py:1`
 
 ### Decision & Analysis Tools
 
@@ -276,14 +276,14 @@ Source: `skills/advanced-skill-creator/scripts/package_skill.py:1`
 ```bash
 python scripts/decision_helper.py --analyze "description" [--format json]
 ```
-Source: `skills/advanced-skill-creator/scripts/decision_helper.py:1`
+Source: `skills/claude-skillkit/scripts/decision_helper.py:1`
 
 **9. pattern_detector.py** - Pattern recognition and analysis
 ```bash
 python scripts/pattern_detector.py "use case" [--format json]
 python scripts/pattern_detector.py --list
 ```
-Source: `skills/advanced-skill-creator/scripts/pattern_detector.py:1`
+Source: `skills/claude-skillkit/scripts/pattern_detector.py:1`
 
 ### Additional Tools
 
@@ -291,32 +291,32 @@ Source: `skills/advanced-skill-creator/scripts/pattern_detector.py:1`
 ```bash
 python scripts/migration_helper.py document.md [--format json]
 ```
-Source: `skills/advanced-skill-creator/scripts/migration_helper.py:1`
+Source: `skills/claude-skillkit/scripts/migration_helper.py:1`
 
 **split_skill.py** - Progressive disclosure for large skills
 ```bash
 python scripts/split_skill.py skill-name/ [--format json]
 ```
 Threshold: Splits skills >350 lines
-Source: `skills/advanced-skill-creator/scripts/split_skill.py:1`
+Source: `skills/claude-skillkit/scripts/split_skill.py:1`
 
 **quick_validate.py** - Fast validation check
 ```bash
 python scripts/quick_validate.py skill-name/
 ```
-Source: `skills/advanced-skill-creator/scripts/quick_validate.py:1`
+Source: `skills/claude-skillkit/scripts/quick_validate.py:1`
 
 ---
 
 ## Project Structure
 
 ```
-claude-advanced-skill-creator/          # Repository root
+claude-skillkit/          # Repository root
 ├── .claude-plugin/                     # Plugin configuration
 │   ├── plugin.json                    # Plugin manifest
 │   └── marketplace.json               # Marketplace catalog
 ├── skills/                            # Skills directory
-│   └── advanced-skill-creator/       # Main skill
+│   └── claude-skillkit/              # Main skill
 │       ├── SKILL.md                  # Main skill definition
 │       ├── CHANGELOG.md              # Version history
 │       ├── scripts/                  # Automation tools
@@ -349,7 +349,7 @@ claude-advanced-skill-creator/          # Repository root
 │           ├── section-7-knowledge-reference-map.md
 │           ├── research-methodology.md
 │           └── proposal-generation.md
-├── advanced-skill-creator-v1.2.skill  # Packaged skill (legacy)
+├── claude-skillkit-v1.2.skill  # Packaged skill (legacy)
 ├── readme-expert.skill                 # Helper skill for documentation
 ├── LICENSE                            # Apache 2.0 License
 ├── README.md                          # This file
@@ -372,7 +372,7 @@ claude-advanced-skill-creator/          # Repository root
 
 - **CHANGELOG.md** - Version history and release notes
   - Current: v1.2.0 (2025-11-13)
-  - See: `skills/advanced-skill-creator/CHANGELOG.md:1`
+  - See: `skills/claude-skillkit/CHANGELOG.md:1`
 
 ### Knowledge Base
 
@@ -400,7 +400,7 @@ Organized in `knowledge/` directory with 3 categories:
 - Parameter documentation
 - Output format specifications
 
-Access: See `skills/advanced-skill-creator/knowledge/INDEX.md` for complete map
+Access: See `skills/claude-skillkit/knowledge/INDEX.md` for complete map
 
 ### Reference Documentation
 
@@ -475,7 +475,7 @@ Use `decision_helper.py` for automated analysis.
 - Research token optimization (Issue #4)
 - Description validation (Issue #6)
 
-See `skills/advanced-skill-creator/CHANGELOG.md` for full details.
+See `skills/claude-skillkit/CHANGELOG.md` for full details.
 
 ---
 
@@ -505,7 +505,7 @@ See `skills/advanced-skill-creator/CHANGELOG.md` for full details.
 ## Troubleshooting
 
 **Validation failures:**
-- Check `skills/advanced-skill-creator/knowledge/tools/14-validation-tools-guide.md`
+- Check `skills/claude-skillkit/knowledge/tools/14-validation-tools-guide.md`
 - Run `quick_validate.py` for fast diagnosis
 
 **Broken references:**
@@ -545,9 +545,9 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## Support
 
-- **Documentation:** See `skills/advanced-skill-creator/knowledge/INDEX.md`
-- **Tool Guides:** See `skills/advanced-skill-creator/knowledge/tools/`
-- **Workflows:** See `skills/advanced-skill-creator/references/`
+- **Documentation:** See `skills/claude-skillkit/knowledge/INDEX.md`
+- **Tool Guides:** See `skills/claude-skillkit/knowledge/tools/`
+- **Workflows:** See `skills/claude-skillkit/references/`
 - **Issues:** Use GitHub issues for bug reports
 
 ---

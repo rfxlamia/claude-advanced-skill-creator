@@ -173,4 +173,4 @@ See File 03 for decision tree details.
 
 ---
 
-**Status:** Ã¢Å“â€¦ Production-ready | **Version:** 1.0 | **Integration:** Ready for advanced-skill-creator
+**Status:** Ã¢Å“â€¦ Production-ready | **Version:** 1.0 | **Integration:** Ready for claude-skillkit

@@ -1,5 +1,5 @@
 ---
-name: advanced-skill-creator
+name: claude-skillkit
 description: >
   Professional skill creation with research-driven workflow and automated validation.
   
