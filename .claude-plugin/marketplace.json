@@ -1,0 +1,29 @@
+{
+  "name": "advanced-skill-creator-marketplace",
+  "owner": {
+    "name": "rfxlamia",
+    "email": "rfxlamia@github.com"
+  },
+  "plugins": [
+    {
+      "name": "advanced-skill-creator",
+      "description": "Professional skill creation with research-driven workflow and automated validation. Features 12-step workflow, 9 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.",
+      "source": "./",
+      "version": "1.2.0",
+      "author": {
+        "name": "rfxlamia"
+      },
+      "homepage": "https://github.com/rfxlamia/claude-advanced-skill-creator",
+      "repository": "https://github.com/rfxlamia/claude-advanced-skill-creator",
+      "license": "Apache-2.0",
+      "keywords": [
+        "skill-creator",
+        "validation",
+        "automation",
+        "quality-assurance",
+        "research-driven",
+        "anti-hallucination"
+      ]
+    }
+  ]
+}

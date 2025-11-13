@@ -100,18 +100,44 @@ The readme-expert skill demonstrates:
 
 2. **Verify installation:**
    ```bash
-   ls advanced-skill-creator/
+   ls skills/advanced-skill-creator/
    # Expected: SKILL.md, scripts/, knowledge/, references/
    ```
 
 3. **Test a script:**
    ```bash
-   python advanced-skill-creator/scripts/quick_validate.py
+   python skills/advanced-skill-creator/scripts/quick_validate.py
    ```
 
 ### Create Your First Skill
 
-**Option 1: Use the skill in Claude Code**
+**Option 1: Install via Plugin (Recommended)**
+
+The easiest way to use this framework is through Claude Code's plugin system:
+
+```bash
+# In Claude Code, add the marketplace
+/plugin marketplace add rfxlamia/claude-advanced-skill-creator
+
+# Then install the plugin
+/plugin install advanced-skill-creator@rfxlamia
+```
+
+Or use the interactive plugin menu:
+```bash
+/plugin
+# Select "Browse Plugins" → Find "advanced-skill-creator" → Install
+```
+
+Once installed, the skill is automatically available. Invoke it with:
+```
+"Create a skill for PDF manipulation"
+```
+
+**Option 2: Manual Installation (.skill file)**
+
+If you prefer manual installation:
+
 ```bash
 # Extract and install the skill (.skill files are zip archives)
 unzip advanced-skill-creator-v1.2.skill -d ~/.claude/skills/advanced-skill-creator
@@ -125,16 +151,19 @@ Claude Code will auto-discover the skill. Then invoke it:
 "Create a skill for PDF manipulation"
 ```
 
-**Option 2: Use scripts directly**
+**Option 3: Use Scripts Directly**
+
+For direct script usage without skill installation:
+
 ```bash
 # Initialize new skill
-python advanced-skill-creator/scripts/init_skill.py my-skill --path ./skills
+python skills/advanced-skill-creator/scripts/init_skill.py my-skill --path ./skills
 
 # Validate structure
-python advanced-skill-creator/scripts/validate_skill.py my-skill/
+python skills/advanced-skill-creator/scripts/validate_skill.py my-skill/
 
 # Package for deployment
-python advanced-skill-creator/scripts/package_skill.py my-skill/
+python skills/advanced-skill-creator/scripts/package_skill.py my-skill/
 ```
 
 ---
@@ -169,7 +198,7 @@ The skill supports 5 main workflows based on your intent:
 9. **Quality Assessment** - Score against quality rubric
 10. **Package** - Create deployable .skill file
 
-See `advanced-skill-creator/SKILL.md` for detailed workflow documentation.
+See `skills/advanced-skill-creator/SKILL.md` for detailed workflow documentation.
 
 ### Validation Workflow
 
@@ -177,12 +206,12 @@ For existing skills, run validation subset (Steps 3-8):
 
 ```bash
 # Quick validation
-python advanced-skill-creator/scripts/quick_validate.py skill-name/
+python skills/advanced-skill-creator/scripts/quick_validate.py skill-name/
 
 # Comprehensive validation
-python advanced-skill-creator/scripts/validate_skill.py skill-name/ --format json
-python advanced-skill-creator/scripts/security_scanner.py skill-name/ --format json
-python advanced-skill-creator/scripts/quality_scorer.py skill-name/ --format json
+python skills/advanced-skill-creator/scripts/validate_skill.py skill-name/ --format json
+python skills/advanced-skill-creator/scripts/security_scanner.py skill-name/ --format json
+python skills/advanced-skill-creator/scripts/quality_scorer.py skill-name/ --format json
 ```
 
 ---
@@ -197,26 +226,26 @@ All 9 tools support standardized `--format json` output for automation.
 ```bash
 python scripts/init_skill.py <skill-name> --path <directory>
 ```
-Source: `advanced-skill-creator/scripts/init_skill.py:1`
+Source: `skills/advanced-skill-creator/scripts/init_skill.py:1`
 
 **2. validate_skill.py** - Structure and reference validation
 ```bash
 python scripts/validate_skill.py skill-name/ [--format json]
 ```
 Features: Cross-reference validation, broken link detection, orphaned file detection
-Source: `advanced-skill-creator/scripts/validate_skill.py:1`
+Source: `skills/advanced-skill-creator/scripts/validate_skill.py:1`
 
 **3. security_scanner.py** - Security audit
 ```bash
 python scripts/security_scanner.py skill-name/ [--format json]
 ```
-Source: `advanced-skill-creator/scripts/security_scanner.py:1`
+Source: `skills/advanced-skill-creator/scripts/security_scanner.py:1`
 
 **4. token_estimator.py** - Token analysis and optimization
 ```bash
 python scripts/token_estimator.py skill-name/ [--format json]
 ```
-Source: `advanced-skill-creator/scripts/token_estimator.py:1`
+Source: `skills/advanced-skill-creator/scripts/token_estimator.py:1`
 
 **5. test_generator.py** - Automated test generation
 ```bash
@@ -226,20 +255,20 @@ Parameters:
 - `--test-format`: pytest, unittest, or plain (default: pytest)
 - `--format`: text or json (default: text)
 
-Source: `advanced-skill-creator/scripts/test_generator.py:1`
+Source: `skills/advanced-skill-creator/scripts/test_generator.py:1`
 
 **6. quality_scorer.py** - Quality assessment (0-10 scale)
 ```bash
 python scripts/quality_scorer.py skill-name/ [--format json]
 ```
-Source: `advanced-skill-creator/scripts/quality_scorer.py:1`
+Source: `skills/advanced-skill-creator/scripts/quality_scorer.py:1`
 
 **7. package_skill.py** - Package skill for deployment
 ```bash
 python scripts/package_skill.py skill-name/ [--strict]
 ```
 Features: Pre-packaging validation, orphaned file warnings
-Source: `advanced-skill-creator/scripts/package_skill.py:1`
+Source: `skills/advanced-skill-creator/scripts/package_skill.py:1`
 
 ### Decision & Analysis Tools
 
@@ -247,14 +276,14 @@ Source: `advanced-skill-creator/scripts/package_skill.py:1`
 ```bash
 python scripts/decision_helper.py --analyze "description" [--format json]
 ```
-Source: `advanced-skill-creator/scripts/decision_helper.py:1`
+Source: `skills/advanced-skill-creator/scripts/decision_helper.py:1`
 
 **9. pattern_detector.py** - Pattern recognition and analysis
 ```bash
 python scripts/pattern_detector.py "use case" [--format json]
 python scripts/pattern_detector.py --list
 ```
-Source: `advanced-skill-creator/scripts/pattern_detector.py:1`
+Source: `skills/advanced-skill-creator/scripts/pattern_detector.py:1`
 
 ### Additional Tools
 
@@ -262,63 +291,69 @@ Source: `advanced-skill-creator/scripts/pattern_detector.py:1`
 ```bash
 python scripts/migration_helper.py document.md [--format json]
 ```
-Source: `advanced-skill-creator/scripts/migration_helper.py:1`
+Source: `skills/advanced-skill-creator/scripts/migration_helper.py:1`
 
 **split_skill.py** - Progressive disclosure for large skills
 ```bash
 python scripts/split_skill.py skill-name/ [--format json]
 ```
 Threshold: Splits skills >350 lines
-Source: `advanced-skill-creator/scripts/split_skill.py:1`
+Source: `skills/advanced-skill-creator/scripts/split_skill.py:1`
 
 **quick_validate.py** - Fast validation check
 ```bash
 python scripts/quick_validate.py skill-name/
 ```
-Source: `advanced-skill-creator/scripts/quick_validate.py:1`
+Source: `skills/advanced-skill-creator/scripts/quick_validate.py:1`
 
 ---
 
 ## Project Structure
 
 ```
-advanced-skill-creator-v1.2/
-├── advanced-skill-creator-v1.2.skill   # Packaged skill (deployable)
-├── readme-expert.skill                  # Helper skill for documentation
-├── advanced-skill-creator/              # Source directory
-│   ├── SKILL.md                        # Main skill definition
-│   ├── CHANGELOG.md                    # Version history
-│   ├── scripts/                        # Automation tools
-│   │   ├── init_skill.py              # Skill initialization
-│   │   ├── validate_skill.py          # Validation tool
-│   │   ├── security_scanner.py        # Security audit
-│   │   ├── token_estimator.py         # Token analysis
-│   │   ├── test_generator.py          # Test generation
-│   │   ├── quality_scorer.py          # Quality scoring
-│   │   ├── package_skill.py           # Packaging tool
-│   │   ├── decision_helper.py         # Decision support
-│   │   ├── pattern_detector.py        # Pattern analysis
-│   │   ├── migration_helper.py        # Document conversion
-│   │   ├── split_skill.py             # Skill splitting
-│   │   ├── quick_validate.py          # Quick validation
-│   │   └── utils/                     # Utility modules
-│   │       ├── budget_tracker.py      # Content budget tracking
-│   │       ├── reference_validator.py # Reference validation
-│   │       └── output_formatter.py    # Output formatting
-│   ├── knowledge/                     # Knowledge base
-│   │   ├── INDEX.md                  # Knowledge map
-│   │   ├── foundation/               # Core concepts (8 files)
-│   │   ├── application/              # Implementation guides
-│   │   └── tools/                    # Tool documentation (9 guides)
-│   └── references/                   # Workflow documentation
-│       ├── section-2-full-creation-workflow.md
-│       ├── section-3-validation-workflow-existing-skill.md
-│       ├── section-4-decision-workflow-skills-vs-subagents.md
-│       ├── section-5-migration-workflow-doc-to-skill.md
-│       ├── section-7-knowledge-reference-map.md
-│       ├── research-methodology.md
-│       └── proposal-generation.md
-└── .gitignore
+claude-advanced-skill-creator/          # Repository root
+├── .claude-plugin/                     # Plugin configuration
+│   ├── plugin.json                    # Plugin manifest
+│   └── marketplace.json               # Marketplace catalog
+├── skills/                            # Skills directory
+│   └── advanced-skill-creator/       # Main skill
+│       ├── SKILL.md                  # Main skill definition
+│       ├── CHANGELOG.md              # Version history
+│       ├── scripts/                  # Automation tools
+│       │   ├── init_skill.py        # Skill initialization
+│       │   ├── validate_skill.py    # Validation tool
+│       │   ├── security_scanner.py  # Security audit
+│       │   ├── token_estimator.py   # Token analysis
+│       │   ├── test_generator.py    # Test generation
+│       │   ├── quality_scorer.py    # Quality scoring
+│       │   ├── package_skill.py     # Packaging tool
+│       │   ├── decision_helper.py   # Decision support
+│       │   ├── pattern_detector.py  # Pattern analysis
+│       │   ├── migration_helper.py  # Document conversion
+│       │   ├── split_skill.py       # Skill splitting
+│       │   ├── quick_validate.py    # Quick validation
+│       │   └── utils/               # Utility modules
+│       │       ├── budget_tracker.py      # Content budget tracking
+│       │       ├── reference_validator.py # Reference validation
+│       │       └── output_formatter.py    # Output formatting
+│       ├── knowledge/               # Knowledge base
+│       │   ├── INDEX.md            # Knowledge map
+│       │   ├── foundation/         # Core concepts (8 files)
+│       │   ├── application/        # Implementation guides
+│       │   └── tools/              # Tool documentation (9 guides)
+│       └── references/             # Workflow documentation
+│           ├── section-2-full-creation-workflow.md
+│           ├── section-3-validation-workflow-existing-skill.md
+│           ├── section-4-decision-workflow-skills-vs-subagents.md
+│           ├── section-5-migration-workflow-doc-to-skill.md
+│           ├── section-7-knowledge-reference-map.md
+│           ├── research-methodology.md
+│           └── proposal-generation.md
+├── advanced-skill-creator-v1.2.skill  # Packaged skill (legacy)
+├── readme-expert.skill                 # Helper skill for documentation
+├── LICENSE                            # Apache 2.0 License
+├── README.md                          # This file
+└── .gitignore                         # Git ignore rules
 ```
 
 ---
@@ -337,7 +372,7 @@ advanced-skill-creator-v1.2/
 
 - **CHANGELOG.md** - Version history and release notes
   - Current: v1.2.0 (2025-11-13)
-  - See: `advanced-skill-creator/CHANGELOG.md:1`
+  - See: `skills/advanced-skill-creator/CHANGELOG.md:1`
 
 ### Knowledge Base
 
@@ -365,7 +400,7 @@ Organized in `knowledge/` directory with 3 categories:
 - Parameter documentation
 - Output format specifications
 
-Access: See `advanced-skill-creator/knowledge/INDEX.md` for complete map
+Access: See `skills/advanced-skill-creator/knowledge/INDEX.md` for complete map
 
 ### Reference Documentation
 
@@ -440,7 +475,7 @@ Use `decision_helper.py` for automated analysis.
 - Research token optimization (Issue #4)
 - Description validation (Issue #6)
 
-See `advanced-skill-creator/CHANGELOG.md` for full details.
+See `skills/advanced-skill-creator/CHANGELOG.md` for full details.
 
 ---
 
@@ -470,7 +505,7 @@ See `advanced-skill-creator/CHANGELOG.md` for full details.
 ## Troubleshooting
 
 **Validation failures:**
-- Check `advanced-skill-creator/knowledge/tools/14-validation-tools-guide.md`
+- Check `skills/advanced-skill-creator/knowledge/tools/14-validation-tools-guide.md`
 - Run `quick_validate.py` for fast diagnosis
 
 **Broken references:**
@@ -510,9 +545,9 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## Support
 
-- **Documentation:** See `advanced-skill-creator/knowledge/INDEX.md`
-- **Tool Guides:** See `advanced-skill-creator/knowledge/tools/`
-- **Workflows:** See `advanced-skill-creator/references/`
+- **Documentation:** See `skills/advanced-skill-creator/knowledge/INDEX.md`
+- **Tool Guides:** See `skills/advanced-skill-creator/knowledge/tools/`
+- **Workflows:** See `skills/advanced-skill-creator/references/`
 - **Issues:** Use GitHub issues for bug reports
 
 ---
