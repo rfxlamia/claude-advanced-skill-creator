@@ -293,4 +293,90 @@ def main():
         else:
             print(detector.list_all_patterns())
         sys.exit(0)
-    
+
+
+    # Interactive mode
+    if args.interactive or not args.description:
+        if args.format == 'json':
+            response = format_error_response(
+                error_type='InteractiveModeNotSupported',
+                message='Interactive mode does not support JSON output',
+                tool_name='pattern_detector',
+                help_text='Use analysis mode with description for JSON output'
+            )
+            output_json(response)
+            sys.exit(1)
+        pattern_id = detector.interactive_selection()
+        print(detector.generate_recommendation(pattern_id))
+        sys.exit(0)
+
+    # Analysis mode
+    matches = detector.analyze_use_case(args.description)
+    best_match, confidence = matches[0]
+
+    if confidence < 0.1:
+        if args.format == 'json':
+            response = format_error_response(
+                error_type='NoPatternMatch',
+                message='No clear pattern match found',
+                tool_name='pattern_detector',
+                help_text='Try providing more keywords in description, use --interactive mode, or --list to see all patterns',
+                details={'confidence': round(confidence, 2)}
+            )
+            output_json(response)
+        else:
+            print("No clear pattern match found.")
+            print("\nSuggestions:")
+            print("  - Try --interactive mode for guided selection")
+            print("  - Try --list to see all available patterns")
+            print("  - Provide more keywords in your description")
+        sys.exit(1)
+
+    # Show primary recommendation
+    if args.format == 'json':
+        recommendation = detector.generate_recommendation_json(best_match, confidence)
+
+        # Add alternatives if confidence is moderate
+        alternatives = []
+        if confidence < 0.5 and len(matches) > 1:
+            for pattern_id, score in matches[1:3]:
+                if score > 0:
+                    pattern = detector.PATTERNS[pattern_id]
+                    alternatives.append({
+                        'pattern_id': pattern_id,
+                        'pattern_name': pattern['name'],
+                        'description': pattern['description'],
+                        'confidence': round(score, 2)
+                    })
+
+        data = {
+            'primary_recommendation': recommendation,
+            'alternatives': alternatives if alternatives else None
+        }
+
+        response = format_success_response(
+            data=data,
+            tool_name='pattern_detector'
+        )
+        output_json(response)
+    else:
+        print(detector.generate_recommendation(best_match, confidence))
+
+        # Show alternatives if confidence is moderate
+        if confidence < 0.5 and len(matches) > 1:
+            print("\n" + "-"*60)
+            print("Alternative patterns to consider:")
+            print("-"*60)
+            for pattern_id, score in matches[1:3]:
+                if score > 0:
+                    pattern = detector.PATTERNS[pattern_id]
+                    print(f"  - {pattern['name']} ({score:.0%} match)")
+                    print(f"    {pattern['description']}")
+            print()
+
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()
+
