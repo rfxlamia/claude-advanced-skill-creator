@@ -10,3 +10,6 @@ __pycache__/
 
 # Claude Code local settings
 .claude/
+
+# Test directories
+readme-expert-test/
