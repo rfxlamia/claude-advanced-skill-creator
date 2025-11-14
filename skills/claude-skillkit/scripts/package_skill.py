@@ -125,35 +125,28 @@ def package_skill(skill_path, output_dir=None, strict=False):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory] [--strict]")
-        print("\nExample:")
-        print("  python utils/package_skill.py skills/public/my-skill")
-        print("  python utils/package_skill.py skills/public/my-skill ./dist")
-        print("  python utils/package_skill.py skills/public/my-skill ./dist --strict")
-        print("\nOptions:")
-        print("  --strict   Fail if any reference issues found (default: warn only)")
-        sys.exit(1)
+    import argparse
 
-    skill_path = sys.argv[1]
-    output_dir = None
-    strict = False
+    parser = argparse.ArgumentParser(
+        description='Package a skill folder into a distributable .skill file',
+        epilog='Example: python package_skill.py skills/public/my-skill ./dist --strict'
+    )
+    parser.add_argument('skill_path', help='Path to the skill folder')
+    parser.add_argument('output_dir', nargs='?', default=None,
+                        help='Output directory for the .skill file (default: current directory)')
+    parser.add_argument('--strict', action='store_true',
+                        help='Fail if any reference issues found (default: warn only)')
 
-    # v1.2: Parse optional parameters
-    for arg in sys.argv[2:]:
-        if arg == '--strict':
-            strict = True
-        elif not arg.startswith('--'):
-            output_dir = arg
+    args = parser.parse_args()
 
-    print(f"📦 Packaging skill: {skill_path}")
-    if output_dir:
-        print(f"   Output directory: {output_dir}")
-    if strict:
+    print(f"📦 Packaging skill: {args.skill_path}")
+    if args.output_dir:
+        print(f"   Output directory: {args.output_dir}")
+    if args.strict:
         print(f"   Mode: STRICT (fail on reference issues)")
     print()
 
-    result = package_skill(skill_path, output_dir, strict=strict)
+    result = package_skill(args.skill_path, args.output_dir, strict=args.strict)
 
     if result:
         sys.exit(0)
