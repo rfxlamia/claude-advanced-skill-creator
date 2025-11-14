@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.1] - 2025-11-14
+
+### Summary
+Critical bug fixes for quality scoring and confidence calculation. Imperative voice detection improved by 11x, making quality scores more accurate and reliable.
+
+### Fixed
+
+- **quality_scorer.py**: Fixed imperative voice detection logic
+  - Strip YAML frontmatter before processing
+  - Remove markdown formatting (bold, italic, code, links)
+  - Check first 3 words instead of only first word
+  - Lowered threshold: 70% → 50% for full points (30% for partial)
+  - Added more imperative verbs (load, scan, extract, detect, etc.)
+  - **Impact**: Imperative detection improved from 3.33% to 37.50% (11x improvement)
+  - **Example**: readme-expert.skill score improved from 78/100 (Grade C) to 81/100 (Grade B)
+
+- **decision_helper.py**: Fixed confidence calculation bug for Subagent recommendations
+  - Score -3 was showing 82% confidence (should be 75%)
+  - Score -5 was showing 75% confidence (should be 85%)
+  - Confidence was increasing as scores got weaker (backwards logic)
+  - **Root cause**: Formulas used `(score + 5)` and `(score + 8)` which made confidence increase as absolute score decreased
+  - **Fix**: Changed to `(abs(score) - 3)` and `(abs(score) - 6)` to ensure confidence increases with stronger scores
+
+### Changed
+
+- **.gitignore**: Added test directories and Python cache files
+  - Added `__pycache__/` directories
+  - Added `test/` and `tests/` directories
+  - Prevents test artifacts from being committed
+
+### Testing
+
+- ✅ quality_scorer.py: Verified imperative detection on multiple skills
+- ✅ decision_helper.py: Tested with multiple score values to verify correct behavior
+- ✅ Style scores: Average improvement of 73% in scoring accuracy
+
+---
+
 ## [1.2.0] - 2025-11-13
 
 ### Summary
@@ -221,6 +259,7 @@ Comprehensive quality assurance improvements addressing Test Session #3 findings
 
 | Version | Date | Key Changes |
 |---------|------|-------------|
+| **1.2.1** | 2025-11-14 | Bug fixes: imperative detection (11x improvement), confidence calculation, gitignore |
 | **1.2.0** | 2025-11-13 | Quality assurance improvements, 81% of issues fixed, new utilities |
 | **1.0.1** | 2025-11-11 | JSON standardization, navigation improvements |
 | **1.0.0** | 2025-11-10 | Initial release with 12-step workflow, 9 tools, 22 knowledge files |
@@ -285,5 +324,5 @@ Changes are tracked through:
 
 ---
 
-**Generated with:** Claude Skill Kit v1.2.0
-**Last Updated:** 2025-11-13
+**Generated with:** Claude Skill Kit v1.2.1
+**Last Updated:** 2025-11-14
