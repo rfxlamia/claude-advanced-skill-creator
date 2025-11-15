@@ -1,7 +1,7 @@
 {
   "name": "claude-skillkit",
   "description": "Professional skill creation with research-driven workflow and automated validation. Features 12-step workflow, 9 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "rfxlamia",
     "email": "rfxlamia@github.com"
