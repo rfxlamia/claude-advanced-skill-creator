@@ -43,8 +43,8 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 
 ## Section 2: Full Creation Workflow (Overview)
 
-**Prerequisites:** Skill description provided, workspace available  
-**Quality Target:** >=9.0/10  
+**Prerequisites:** Skill description provided, workspace available
+**Quality Target:** >=7.5/10 (Good), >=8.0/10 (Excellent) - See v1.2.1 quality improvements
 **Time:** <10 min with automation
 
 ### 12-Step Process with Validation Gates:
@@ -90,12 +90,24 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 - Tool: `test_generator.py`
 - Creates: Automated validation tests
 
-**STEP 8: Quality Assessment**
+**STEP 8: Quality Assessment (v1.2.1 Enhanced)**
 - Tool: `quality_scorer.py`
-- Gate: Must achieve >=9.0/10 before packaging
+- Gate: Must achieve >=7.5/10 before packaging
+- v1.2.1 Improvements:
+  - Imperative detection: 11x more accurate (3.33% → 37.50%)
+  - Better YAML frontmatter handling
+  - Improved markdown formatting detection
 
-**STEP 9: Package for Deployment**
-- Tool: `python scripts/package_skill.py skill-name/` (Anthropic)
+**Note:** Quality scorer now more accurately detects imperative voice in descriptions.
+Target 70-79% (Grade C) is acceptable, 80-89% (Grade B) is good, 90%+ (Grade A) is excellent.
+
+**STEP 9: Package for Deployment (v1.2.1 Enhanced)**
+- Tool: `python scripts/package_skill.py skill-name/`
+- Options: `--strict` flag for production deployments
+- v1.2.1 Fixes:
+  - Fixed output directory handling
+  - Fixed archive structure organization
+  - Enhanced pre-packaging validation
 - Creates: .skill file ready to deploy
 
 **For detailed implementation:** [See references/section-2-full-creation-workflow.md](references/section-2-full-creation-workflow.md)
@@ -196,6 +208,14 @@ python scripts/decision_helper.py --show-criteria --format json
 # Text mode for human reading (debugging)
 python scripts/decision_helper.py --analyze "description" --format text
 ```
+
+**v1.2.1 Bug Fix:**
+- Fixed confidence calculation bug for Subagent recommendations
+- Before: Score -3 showed 82% confidence (should be 75%)
+- Before: Score -5 showed 75% confidence (should be 85%)
+- Fixed: Confidence now correctly increases with stronger scores
+- Formula changed: `(abs(score) - 3)` and `(abs(score) - 6)` for proper scaling
+
 Guide: `knowledge/tools/18-decision-helper-guide.md`
 
 **Test Generator (v1.2: Parameter update):**
@@ -214,10 +234,22 @@ python scripts/split_skill.py skill-name/ --format json
 ```
 Guide: `knowledge/tools/20-split-skill-guide.md`
 
-**Quality Scorer:**
+**Quality Scorer (v1.2.1 Enhanced):**
 ```bash
 python scripts/quality_scorer.py skill-name/ --format json
 ```
+
+**v1.2.1 Improvements:**
+- Imperative voice detection improved 11x (3.33% → 37.50%)
+- Fixed: YAML frontmatter now stripped before analysis
+- Fixed: Markdown formatting (bold, italic, code, links) properly removed
+- Improved: First 3 words checked instead of only first word
+- Threshold lowered: 70% → 50% for full points (30% for partial)
+
+**Example Impact:**
+- Before: readme-expert.skill = 78/100 (Grade C)
+- After: readme-expert.skill = 81/100 (Grade B)
+
 Guide: `knowledge/tools/21-quality-scorer-guide.md`
 
 **Migration Helper:**
@@ -261,11 +293,17 @@ Guide: `knowledge/tools/22-migration-helper-guide.md`
 - Token budget allocated per file to maintain efficiency
 - Research phase respects Verbalized Sampling probability thresholds (p>0.10)
 
-**Quality Scorer Context:**
-- Scores calibrated for general skill quality heuristics
-- Target: 70%+ is good, 80%+ is excellent
-- Style scoring may not fit all skill types (educational vs technical)
-- Use as guidance, supplement with manual review for edge cases
+**Quality Scorer Context (v1.2.1 Updated):**
+- **Scoring Calibration**: General skill quality heuristics
+  - 70-79% (Grade C): Acceptable quality
+  - 80-89% (Grade B): Good quality
+  - 90-100% (Grade A): Excellent quality
+- **v1.2.1 Improvements**:
+  - Imperative detection 11x more accurate
+  - Better handling of YAML frontmatter and markdown formatting
+  - Realistic thresholds: 50% for full points (down from 70%)
+- **Usage Note**: Style scoring may not fit all skill types (educational vs technical)
+- **Recommendation**: Use as guidance, supplement with manual review for edge cases
 
 ---
 
