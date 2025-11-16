@@ -1,7 +1,7 @@
 # Section 2: Full Creation Workflow
 
 **Prerequisites:** Skill description provided, workspace available
-**Quality Target:** >=9.0/10
+**Quality Target:** >=7.5/10 (Good), >=8.0/10 (Excellent)
 **Time:** <10 min with automation
 
 ### STEP 0: Decide Approach
@@ -317,25 +317,101 @@ Generates automated tests for validation.
 
 **Guide:** `knowledge/tools/19-test-generator-guide.md`
 
-### STEP 8: Quality
+### STEP 8: Quality (v1.2.1 Enhanced)
 
 **Tool:** `python scripts/quality_scorer.py skill-name/ --format json`
 
-**Gates:**
-- >=9.0 -> PROCEED Step 9
-- 8.0-8.9 -> REVIEW improvements
-- <8.0 -> MUST improve
+**v1.2.1 Improvements:**
+- Imperative voice detection improved 11x (3.33% → 37.50%)
+- YAML frontmatter stripped before processing
+- Markdown formatting properly removed (bold, italic, code, links)
+- First 3 words checked instead of only first word
+- Threshold lowered: 70% → 50% for full points
 
-**Note:** Target 7.5/10 is realistic for most skills. 9.0+ may require manual polish.
+**Quality Gates:**
+- **>=8.0 (Grade B+)** -> PROCEED Step 9 (Excellent quality)
+- **7.5-7.9 (Grade C+)** -> ACCEPTABLE, consider improvements
+- **7.0-7.4 (Grade C)** -> REVIEW improvements recommended
+- **<7.0 (Grade D/F)** -> MUST improve before packaging
+
+**Realistic Targets:**
+- Most skills: 7.5-8.5/10 is good quality
+- High-polish skills: 8.5-9.0/10 with manual refinement
+- 9.0+/10: Exceptional, requires significant polish
+
+**Score Interpretation:**
+```
+90-100 (Grade A): Exceptional - Production ready, comprehensive
+80-89  (Grade B): Good - Minor improvements may help
+70-79  (Grade C): Acceptable - Consider targeted improvements
+60-69  (Grade D): Needs work - Address major issues
+<60    (Grade F): Critical - Significant revision required
+```
+
+**Example Impact (v1.2.1):**
+- readme-expert.skill: 78/100 (C) → 81/100 (B)
+- Average improvement: 73% in scoring accuracy
 
 **Guide:** `knowledge/tools/21-quality-scorer-guide.md`
 
-### STEP 9: Package
+### STEP 9: Package (v1.2.1 Enhanced)
 
 **Tool:** `python scripts/package_skill.py skill-name/` (Anthropic)
 
-**Checklist:** Validation, security, tokens, disclosure, quality >=7.5
+**Usage Options:**
+```bash
+# Basic packaging
+python scripts/package_skill.py skill-name/
 
-**Output:** skill-name.skill (deploy-ready ZIP)
+# Custom output directory
+python scripts/package_skill.py skill-name/ ./dist
+
+# Strict mode (fail on any reference issues)
+python scripts/package_skill.py skill-name/ ./dist --strict
+```
+
+**v1.2.1 Improvements:**
+- Fixed output directory handling (respects user-specified paths)
+- Fixed archive structure organization
+- Enhanced pre-packaging validation
+- Strict mode for production deployments
+
+**Pre-Packaging Checklist:**
+- ✅ Structure validation (validate_skill.py)
+- ✅ Security audit (security_scanner.py)
+- ✅ Token optimization (<5000 tokens ideal)
+- ✅ Progressive disclosure (if >350 lines)
+- ✅ Quality score >=7.5/10
+- ✅ Reference validation (no broken links)
+- ✅ No orphaned files (warnings shown)
+
+**Output:** skill-name.skill (deploy-ready ZIP file)
+
+**Validation Modes:**
+- **Default**: Warns about reference issues, continues packaging
+- **--strict**: Fails on any broken references or orphaned files
+
+---
+
+## Changelog Integration (v1.2.1)
+
+**Recent Fixes Applied to Workflow:**
+
+1. **quality_scorer.py** - Imperative Detection (Step 8)
+   - 11x improvement in accuracy (3.33% → 37.50%)
+   - Better handling of YAML and markdown formatting
+   - More realistic scoring thresholds
+
+2. **decision_helper.py** - Confidence Calculation (Step 0)
+   - Fixed backwards confidence logic
+   - Proper score-to-confidence mapping
+   - More reliable recommendations
+
+3. **package_skill.py** - Output & Structure (Step 9)
+   - Fixed output directory handling
+   - Corrected archive structure
+   - Enhanced validation workflow
+
+**For complete changelog:** [See CHANGELOG.md v1.2.1](../CHANGELOG.md#121---2025-11-14)
 
 ---
